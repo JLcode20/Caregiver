@@ -57,6 +57,8 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 // ── RTC ─────────────────────────────────────────────────────
 RTC_DS3231 rtc;
+//Hello
+// test 2
 
 // ── BLUETOOTH ───────────────────────────────────────────────
 BluetoothSerial SerialBT;
@@ -106,15 +108,10 @@ void sendBluetooth(PatientData &d, String &ts);
 void setLED(uint8_t alertLevel);
 
 // ── ESP-NOW RECEIVE CALLBACK ─────────────────────────────────
-// NOTE: ESP32 Arduino core v3.x changed the callback signature.
-// The old (const uint8_t *mac, ...) form no longer compiles.
-// Use esp_now_recv_info_t* and extract src_addr from it instead.
-void onDataReceived(const esp_now_recv_info_t *recvInfo,
-                    const uint8_t *data, int len) {
-  // recvInfo->src_addr  = sender MAC (same as the old *mac param)
-  // recvInfo->des_addr  = destination MAC
-  // recvInfo->rx_ctrl   = radio metadata (RSSI, channel, etc.)
-  (void)recvInfo;   // suppress unused-variable warning if MAC not needed
+// Use the ESP32 Arduino core callback signature supported by this project.
+// Older cores pass the sender MAC as const uint8_t *mac_addr.
+void onDataReceived(const uint8_t *mac_addr, const uint8_t *data, int len) {
+  (void)mac_addr;  // suppress unused-variable warning if MAC not needed
 
   if (len == sizeof(PatientData)) {
     memcpy(&latestData, data, sizeof(PatientData));
