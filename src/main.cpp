@@ -57,7 +57,6 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 // ── RTC ─────────────────────────────────────────────────────
 RTC_DS3231 rtc;
-//Hello
 // test 2
 
 // ── BLUETOOTH ───────────────────────────────────────────────
